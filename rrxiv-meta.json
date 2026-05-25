@@ -2,7 +2,7 @@
   "$comment": "Paper repo materialised in Sprint 14 (2026-05-25). The v1 record was a synthetic seed in rrxiv-instance/seed/; this is the first GitHub-backed revision submitted via the canonical multipart pipeline.",
   "rrxiv_version": "0.1.0",
   "id_slug": "rrxiv:2605.00003",
-  "version": "v3",
+  "version": "v4",
   "title": "Reproducibility budgets for ML preprints",
   "authors": [
     {
@@ -20,7 +20,10 @@
     }
   ],
   "license": "CC-BY-4.0",
-  "topics": ["stat.ML", "cs.LG"],
+  "topics": [
+    "stat.ML",
+    "cs.LG"
+  ],
   "source": {
     "format": "latex",
     "uri": null
@@ -31,6 +34,12 @@
       "paper_id": "01923f8e-0003-7c4d-9e1f-3a2b1c0d4e5f",
       "submitted_at": "2026-05-12T12:00:00Z",
       "notes": "Synthetic seed via scripts/rebuild-seed.sh (pre-canonical content)."
+    },
+    {
+      "version": "v3",
+      "paper_id": "rrxiv:2605.00003",
+      "submitted_at": "2026-05-25T12:00:00Z",
+      "notes": "Sprint 14 substantive-prose v2 submission via canonical multipart flow."
     }
   ]
 }

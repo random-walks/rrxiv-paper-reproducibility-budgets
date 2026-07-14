@@ -36,6 +36,27 @@
       }
     }
   ],
+  "claims": {
+    "$comment": "Author-attached RRP-0019 reproducibility manifests (claim.reproducibility per claim.schema.json). NOTE: as of rrxiv-python HEAD (2026-07-14) neither the parser's meta-merge (authors + id_slug only) nor the server's submission path consumes claim patches from rrxiv-meta.json, and RRP-0030 explicitly deferred manifest-authoring aids — so this block is a declarative record wiring claim ids to the manifest files under repro/, pending a protocol authoring path. manifest_uri is pinned to the v5 tag, cut at the v5 submission pass. manifest_hash is the sha256 of the manifest file's bytes at that tag.",
+    "rrxiv:2605.00003:claim:c1": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c1.manifest.json",
+        "manifest_hash": "sha256:0a5df4640e315e5f1c0095e54b4d511632c565aa7487c049c8795e3c4da241f4"
+      }
+    },
+    "rrxiv:2605.00003:claim:c2": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c2.manifest.json",
+        "manifest_hash": "sha256:dbc923044c65e2b5983fe38809c951824e536dfd8910b2d57ea705b28a87bb3e"
+      }
+    },
+    "rrxiv:2605.00003:claim:c3": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c3.manifest.json",
+        "manifest_hash": "sha256:8f64b437ac325ec14563c3f0cb3e53d6ec03bb306827b2e4f731bc592c075768"
+      }
+    }
+  },
   "license": "CC-BY-4.0",
   "topics": [
     "stat.ML",

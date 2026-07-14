@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "title": "Analysis reproduction for Claim 2 (2.3x median underreport, n=17)",
+  "claim_uri": "https://rrxiv.com/claims/rrxiv:2605.00003:claim:c2",
+  "environment": {
+    "kind": "docker",
+    "image": "docker.io/library/python:3.11-slim",
+    "digest": null,
+    "platform": "linux/amd64"
+  },
+  "data": null,
+  "entrypoint": "python repro/analysis.py c2 --calibration-table data/calibration-17.csv",
+  "expected_outputs": [],
+  "estimated_runtime_minutes": 1,
+  "estimated_cost_usd": 0.01,
+  "notes": "Covers reproducing the ANALYSIS only: recomputing the median and IQR of actual/reported compute ratios from the 17-row calibration table (schema documented in repro/analysis.py; JSON result on stdout; expected median ~= 2.3, IQR ~= [1.4, 4.1]). The calibration table is not yet published as a standalone dataset -- see the paper's open question 'Calibration record as common pool'. Replicating the claim AFRESH means redoing 17 end-to-end replications of audited ML papers: thousands of A100-equivalent GPU-hours and weeks of wall-clock, i.e. the single most expensive artefact behind this paper -- and per this very claim, expect any self-reported figure for it to be optimistic by ~2.3x. The environment digest is left null rather than fabricated; pin it when the data ships."
+}

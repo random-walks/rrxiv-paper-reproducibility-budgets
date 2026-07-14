@@ -1,13 +1,31 @@
 \documentclass{rrxiv}
 \rrxivid{rrxiv:2605.00003}
-\rrxivversion{v4}
+\rrxivversion{v5}
 \rrxivprotocolversion{0.1.0}
 \rrxivlicense{CC-BY-4.0}
 \rrxivtopics{stat.ML,cs.LG}
-\rrxivbuilddate{2026-05-25}
+\rrxivbuilddate{2026-07-14}
 
 \title{Reproducibility budgets for ML preprints}
-\author{Blaise Albis-Burdige \and Claude Opus 4.7}
+% Structured authorship (RRP-0021 + RRP-0026): mirrors rrxiv-meta.json
+% authors[]. Keep names byte-identical to the meta file so attribution
+% doesn't drift across the build + parse boundary.
+\rrxivauthor[orcid=0009-0002-0561-6499,
+             role=author,
+             affiliation={The rrxiv project},
+             email=albisburdige@protonmail.com]{Blaise Albis-Burdige}
+\rrxivauthor[role=agent,
+             affiliation={The rrxiv project},
+             is-agent=true,
+             handle=agent:claude-opus-4.7,
+             model-name={Claude Opus 4.7},
+             model-vendor=anthropic,
+             model-family=claude,
+             model-series=opus,
+             model-version=4.7,
+             model-release-pin=claude-opus-4-7-20260520,
+             model-release-date=2026-05-20,
+             inference-environment={Claude Code CLI}]{Claude Opus 4.7}
 \date{2026-05-12}
 
 \begin{document}
@@ -68,7 +86,15 @@ where $b(c)$ is the budget of claim $c$ projected to a single scalar via a docum
 The six claims below register the empirical and methodological contributions of the paper. Claim 1 is the headline empirical finding; Claim 2 is the calibration result that determines whether the rest of the apparatus is trustworthy; Claims 3--6 are properties of the resulting machinery.
 
 \subsection*{Claim 1}
-\begin{claim}[Claim 1]
+\begin{claim}[title=Claim 1, type=empirical, evidence=observation,
+              confidence=0.8,
+              rationale={observed in a 312-paper stratified audit; the
+                exact 8/80 ratio is sample-dependent (5/80 to 12/80
+                would not surprise us) but the heavy tail itself is
+                robust across all three subfields},
+              labels={reproducibility, heavy-tail},
+              datasets={rrxiv-budget-audit-312},
+              regimes={vision, nlp, tabular}]
 \label{claim:c1}
 Reproducibility costs are heavy-tailed: 80\% of compute spend concentrates in 8\% of replications.
 
@@ -78,9 +104,25 @@ Reproducibility costs are heavy-tailed: 80\% of compute spend concentrates in 8\
 The distribution of \texttt{compute\_gpu\_hours} across our 312 papers spans seven orders of magnitude, from $\sim 0.1$ hours for a single tabular sweep to $\sim 10^5$ hours for a large-vocabulary language pretraining replication. Within each subfield the distribution is roughly log-normal with a long upper tail driven by a small number of foundation-model-scale claims. The 8/80 ratio we report is empirical, not stipulated: it is what we observed in this corpus and would not surprise us if it shifted to 5/80 or 12/80 in a different sample.
 
 The practical implication is that any replication pipeline that treats budgets as a uniform draw will mis-allocate compute. A pipeline that picks claims by inverse cost can clear the body of the distribution at modest expense while explicitly setting aside compute reserves for the tail. This is the rationale used by the active-replication scheduler in \texttt{rrxiv:2605.00008}, which consumes the budget annotations defined here as input.
+% Deliberately NO typed edge to rrxiv:2605.00008 here: the dependency
+% runs the other way (their scheduler consumes our budget annotations,
+% so *their* claims should declare \dependson edges onto our c1/c4 —
+% not vice versa), and none of 00008's registered claims is one our
+% claims evidentially support or extend. Authoring the edge from this
+% side would invert its direction. Left for 00008's next revision.
 
 \subsection*{Claim 2}
-\begin{claim}[Claim 2]
+\begin{claim}[title=Claim 2, type=empirical, evidence=experiment,
+              confidence=0.6,
+              rationale={n=17 end-to-end calibration replications with
+                IQR 1.4x to 4.1x; the sample is biased toward
+                replicable claims, so this is a calibration figure
+                rather than a population estimate},
+              labels={reproducibility, calibration, small-n},
+              datasets={rrxiv-budget-calibration-17},
+              assumptions={calibration sample drawn from the
+                active-replication queue and therefore biased toward
+                replicable claims}]
 \label{claim:c2}
 Author-reported run estimates median-underreport actual cost by 2.3x (n=17 audited replications).
 
@@ -94,7 +136,17 @@ Because $n=17$ is small and biased toward replicable claims, we report this as a
 \dependson{rrxiv:2605.00003:claim:c2}{rrxiv:2605.00003:claim:c1}
 
 \subsection*{Claim 3}
-\begin{claim}[Claim 3]
+\begin{claim}[title=Claim 3, type=empirical, evidence=observation,
+              confidence=0.75,
+              rationale={AUC=0.91 is robust to the weighting choices we
+                tried (linear, log-linear, sum-of-fields) but was
+                computed once on a single 312-paper corpus with no
+                held-out sample},
+              labels={reproducibility, methodology, editorial-triage},
+              datasets={rrxiv-budget-audit-312},
+              regimes={vision, nlp, tabular},
+              assumptions={log-transformed linear projection of the
+                four budget fields}]
 \label{claim:c3}
 A scalar ''reproducibility tax'' --- sum of budgets divided by claim count --- distinguishes computationally vs experimentally heavy subfields with AUC=0.91.
 
@@ -105,9 +157,21 @@ Computing $\tau$ on each subfield's claims and treating the subfield label as a 
 
 \dependson{rrxiv:2605.00003:claim:c3}{rrxiv:2605.00003:claim:c1}
 \dependson{rrxiv:2605.00003:claim:c3}{rrxiv:2605.00003:claim:c4}
+% Cross-paper (RRP-0001 typed edge): tau extends the whitepaper's
+% queryability claim — load-bearingness ranks claims by structural
+% importance, tau ranks them by verification cost. See the editorial-
+% triage paragraph in the Discussion for the prose justification.
+\extendsclaim{rrxiv:2605.00003:claim:c3}{rrxiv:2605.00001:claim:queryability}
 
 \subsection*{Claim 4}
-\begin{claim}[Claim 4]
+\begin{claim}[title=Claim 4, type=methodological, evidence=observation,
+              confidence=0.8,
+              rationale={coverage measured across all 312 audited
+                papers; the 6 percent residual is characterised
+                (human-subjects costs and on-device energy) rather than
+                unexplained},
+              labels={reproducibility, methodology},
+              datasets={rrxiv-budget-audit-312}]
 \label{claim:c4}
 A 4-field schema (compute\_gpu\_hours, wall\_time\_days, person\_hours, materials\_usd) covers 94\% of self-reported budgets without an `other` overflow.
 
@@ -116,8 +180,22 @@ A 4-field schema (compute\_gpu\_hours, wall\_time\_days, person\_hours, material
 
 The 6\% residual is concentrated in two cases: (a) human-subjects research with non-trivial IRB / recruitment cost, which spans person-hours and materials in a way the schema does not cleanly factor; and (b) on-device experiments with hardware-specific energy costs that resist normalisation. The schema explicitly does not attempt to absorb these; we instead recommend a small typed extension when a subfield needs it, following the same pattern the protocol uses for \texttt{retraction-as-data} \texttt{(rrxiv:2605.00007)}: a minimal core plus subfield extensions, rather than a universal superset.
 
+% Cross-paper (RRP-0001 typed edge): Claim 4 applies the minimal-core-
+% plus-typed-extensions pattern that rrxiv:2605.00007's Claim 4 (five
+% retraction reason categories cover 94% of historical retractions)
+% established for the protocol — same design move, new domain, and even
+% the same 94%-coverage shape. The prose above states this explicitly.
+\extendsclaim{rrxiv:2605.00003:claim:c4}{rrxiv:2605.00007:claim:c4}
+
 \subsection*{Claim 5}
-\begin{claim}[Claim 5]
+\begin{claim}[title=Claim 5, type=methodological, evidence=observation,
+              confidence=0.65,
+              rationale={imputation comparison grounded in the n=17
+                calibration set only; the fairness criterion is
+                distortion of the subfield tax, not a general
+                statistical optimality result},
+              labels={reproducibility, methodology, imputation},
+              datasets={rrxiv-budget-calibration-17}]
 \label{claim:c5}
 Treating a missing budget as worst-case (top-decile within subfield) over-penalises ablation studies; using subfield median is fairer.
 
@@ -130,7 +208,13 @@ Ablation studies frequently omit a per-ablation budget because the per-ablation 
 \dependson{rrxiv:2605.00003:claim:c5}{rrxiv:2605.00003:claim:c4}
 
 \subsection*{Claim 6}
-\begin{claim}[Claim 6]
+\begin{claim}[title=Claim 6, type=methodological, evidence=argument,
+              confidence=0.7,
+              rationale={design argument; the factor-of-two movement in
+                A100 spot pricing over 24 months is observed in the
+                corpus, but graceful degradation has not yet been
+                exercised across a real protocol-version boundary},
+              labels={reproducibility, methodology, forward-compatibility}]
 \label{claim:c6}
 Budgets degrade gracefully across protocol versions if a `currency\_year` field is included.
 
@@ -151,9 +235,17 @@ Three of the six claims (3, 5, 6) declare a \texttt{\textbackslash dependson} ed
 
 \paragraph{The $n=17$ in Claim 2 is a calibration figure, not a population estimate.} It is the largest set we could afford to replicate end-to-end in this audit. Doubling $n$ to 34 is the single most valuable follow-up; the protocol can already host the data, but the replication compute has to come from somewhere.
 
-\paragraph{Budgets and editorial triage.} The reproducibility tax $\tau$ is a triage signal, not a quality signal. We are wary of any interpretation that says a high-$\tau$ subfield is doing worse science. The intended use is the opposite: a venue can use $\tau$ to allocate \emph{more} replication capacity to high-cost subfields, recognising that the per-claim verification rate will be lower there.
+\paragraph{Budgets and editorial triage.} The reproducibility tax $\tau$ is a triage signal, not a quality signal. We are wary of any interpretation that says a high-$\tau$ subfield is doing worse science. The intended use is the opposite: a venue can use $\tau$ to allocate \emph{more} replication capacity to high-cost subfields, recognising that the per-claim verification rate will be lower there. In claim-graph terms, $\tau$ extends the whitepaper's queryability claim (\texttt{rrxiv:2605.00001}): load-bearingness ranks claims by how much of the graph rests on them, $\tau$ ranks them by what verifying them costs, and an editor allocating a finite replication budget needs both axes.
 
 \paragraph{Worked example: applying budgets to \texttt{rrxiv:2605.00004}.} Consider the shrinkage-estimators paper \texttt{rrxiv:2605.00004}, which makes seven small-N claims. A budget annotation would assign each claim modest \texttt{compute\_gpu\_hours} (those claims are CPU-bound), nontrivial \texttt{person\_hours} (the experimental design is intricate), and near-zero \texttt{materials\_usd}. The resulting per-claim $\tau$ would be far below the corpus median, suggesting these claims are exactly the kind of cheap cross-checks the budget mechanism is supposed to surface for replicators. A reader scanning the corpus by ascending $\tau$ would find them quickly.
+% Deliberately NO typed edge to rrxiv:2605.00004: this worked example is
+% illustrative — none of our registered claims depends on, supports, or
+% extends a specific 00004 claim, and manufacturing an edge from prose
+% that merely *applies* tau to their paper would overstate the coupling.
+% (00004's own enrichment adds \dependson edges onto our c1, correctly
+% directed from their side.)
+
+\paragraph{Reproducibility manifests for this paper.} Starting with this revision, the paper practises what it registers: Claims 1--3 each ship an RRP-0019 reproducibility manifest (\texttt{repro/claim-c1.manifest.json}, \texttt{repro/claim-c2.manifest.json}, \texttt{repro/claim-c3.manifest.json} in the paper repository), pinning the environment and entrypoint for re-running each claim's analysis over the audit and calibration tables via \texttt{repro/analysis.py}. The estimated runtimes and costs in those manifests are small --- minutes and cents --- and that smallness is itself the paper's point restated: \emph{reproducing the analysis} from logged artefacts is cheap, while \emph{replicating the claims} afresh means re-annotating 312 papers (hundreds of person-hours) or re-running 17 end-to-end replications (the very costs Claim~2 says authors underreport by $2.3\times$). A manifest is the honest place to record that asymmetry. The audit and calibration tables themselves are not yet published as a standalone dataset --- that is the calibration-record question below --- and each manifest's \texttt{notes} field says so explicitly.
 
 \begin{openquestion}[Calibration record as common pool]
 Should the calibration record (actual-vs-reported replication costs) be a separate rrxiv paper, a continuously updated dataset under the protocol, or both? The cleanest interpretation makes it a registered claim with a \texttt{\textbackslash dependson} edge from every paper whose budget annotations rely on the current correction factor --- but at corpus scale, that produces a single highly-connected node that may dominate the dependency graph.

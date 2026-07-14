@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "title": "Analysis reproduction for Claim 3 (reproducibility tax separates subfields, AUC=0.91)",
+  "claim_uri": "https://rrxiv.com/claims/rrxiv:2605.00003:claim:c3",
+  "environment": {
+    "kind": "docker",
+    "image": "docker.io/library/python:3.11-slim",
+    "digest": null,
+    "platform": "linux/amd64"
+  },
+  "data": null,
+  "entrypoint": "python repro/analysis.py c3 --audit-table data/audit-312.csv",
+  "expected_outputs": [],
+  "estimated_runtime_minutes": 2,
+  "estimated_cost_usd": 0.01,
+  "notes": "Covers reproducing the ANALYSIS only: recomputing per-subfield tau (log1p of compute_gpu_hours + 24*wall_time_days + person_hours, averaged per subfield) and the Mann-Whitney ROC AUC of the scalar budget as a vision+nlp vs tabular discriminator, from the logged 312-paper audit table (schema documented in repro/analysis.py; JSON result on stdout; expected AUC ~= 0.91). The audit table is not yet published as a standalone dataset -- see the paper's open question 'Calibration record as common pool' -- so this manifest is a pinned recipe awaiting its data release. The weighting is the one documented in the paper's Approach section; Claim 3's robustness statement covers the linear / log-linear / sum-of-fields family, and this entrypoint recomputes only the documented default. The environment digest is left null rather than fabricated; pin it when the data ships."
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "title": "Analysis reproduction for Claim 1 (80% of compute concentrates in 8% of replications)",
+  "claim_uri": "https://rrxiv.com/claims/rrxiv:2605.00003:claim:c1",
+  "environment": {
+    "kind": "docker",
+    "image": "docker.io/library/python:3.11-slim",
+    "digest": null,
+    "platform": "linux/amd64"
+  },
+  "data": null,
+  "entrypoint": "python repro/analysis.py c1 --audit-table data/audit-312.csv",
+  "expected_outputs": [],
+  "estimated_runtime_minutes": 1,
+  "estimated_cost_usd": 0.01,
+  "notes": "Covers reproducing the ANALYSIS only: recomputing the compute-concentration statistic from the logged 312-paper audit table (stdlib-only script, JSON result on stdout; expected share_of_replications_for_80pct_compute ~= 0.08). The audit table (schema documented in repro/analysis.py) is not yet published as a standalone dataset -- see the paper's open question 'Calibration record as common pool' -- so this manifest is a pinned recipe awaiting its data release. Replicating the claim AFRESH is a different budget entirely: re-annotating ~312 preprints is on the order of 300 person-hours, which is exactly the reporting asymmetry this paper registers. The environment digest is left null rather than fabricated; pin it when the data ships. Image is unpinned upstream python:3.11-slim."
+}

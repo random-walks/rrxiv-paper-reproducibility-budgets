@@ -2,14 +2,14 @@
   "$comment": "Paper repo materialised in Sprint 14 (2026-05-25). The v1 record was a synthetic seed in rrxiv-instance/seed/; this is the first GitHub-backed revision submitted via the canonical multipart pipeline.",
   "rrxiv_version": "0.1.0",
   "id_slug": "rrxiv:2605.00003",
-  "version": "v4",
+  "version": "v5",
   "title": "Reproducibility budgets for ML preprints",
   "authors": [
     {
       "name": "Blaise Albis-Burdige",
       "orcid": "0009-0002-0561-6499",
       "is_agent": false,
-      "affiliation": "Random Walks",
+      "affiliation": "The rrxiv project",
       "email": "albisburdige@protonmail.com",
       "role": "author"
     },
@@ -17,6 +17,7 @@
       "name": "Claude Opus 4.7",
       "is_agent": true,
       "agent_handle": "agent:claude-opus-4.7",
+      "affiliation": "The rrxiv project",
       "role": "agent",
       "provenance": {
         "models": [
@@ -36,6 +37,27 @@
       }
     }
   ],
+  "claims": {
+    "$comment": "Author-attached RRP-0019 reproducibility manifests (claim.reproducibility per claim.schema.json). NOTE: as of rrxiv-python HEAD (2026-07-14) neither the parser's meta-merge (authors + id_slug only) nor the server's submission path consumes claim patches from rrxiv-meta.json, and RRP-0030 explicitly deferred manifest-authoring aids — so this block is a declarative record wiring claim ids to the manifest files under repro/, pending a protocol authoring path. manifest_uri is pinned to the v5 tag, cut at the v5 submission pass. manifest_hash is the sha256 of the manifest file's bytes at that tag.",
+    "rrxiv:2605.00003:claim:c1": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c1.manifest.json",
+        "manifest_hash": "sha256:0a5df4640e315e5f1c0095e54b4d511632c565aa7487c049c8795e3c4da241f4"
+      }
+    },
+    "rrxiv:2605.00003:claim:c2": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c2.manifest.json",
+        "manifest_hash": "sha256:dbc923044c65e2b5983fe38809c951824e536dfd8910b2d57ea705b28a87bb3e"
+      }
+    },
+    "rrxiv:2605.00003:claim:c3": {
+      "reproducibility": {
+        "manifest_uri": "https://github.com/random-walks/rrxiv-paper-reproducibility-budgets/blob/v5/repro/claim-c3.manifest.json",
+        "manifest_hash": "sha256:8f64b437ac325ec14563c3f0cb3e53d6ec03bb306827b2e4f731bc592c075768"
+      }
+    }
+  },
   "license": "CC-BY-4.0",
   "topics": [
     "stat.ML",
@@ -63,6 +85,12 @@
       "paper_id": "rrxiv:2605.00003",
       "submitted_at": "2026-05-30T00:00:00Z",
       "notes": "Re-minted under RRP-0029: the machine id is now a server-assigned UUIDv7 (opaque); id_slug rrxiv:2605.00003 is the stable citable identifier and claim ids are slug-based. Current deployed head as of the 2026-05-30 corpus re-mint."
+    },
+    {
+      "version": "v5",
+      "paper_id": "rrxiv:2605.00003",
+      "submitted_at": "2026-07-14T18:04:45.753010Z",
+      "notes": "2026-07 protocol-enrichment revision (RRP-0030 epistemology, typed cross-paper edges, structured authorship)."
     }
   ]
 }
